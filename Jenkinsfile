@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker build -t aswin/expense-tracker .
+                    docker build -t 26032004/expense-tracker .
                     '''
                 }
             }
@@ -23,9 +23,8 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'dockerhub_pass', variable: 'DOCKERHUB_TOKEN')]) {
                     sh '''
-                    echo $DOCKERHUB_TOKEN | docker login -u ASWIN-AK0 --password-stdin
-                    docker tag aswin/expense-tracker aswin/expense-tracker:latest
-                    docker push aswin/expense-tracker:latest
+                    echo $DOCKERHUB_TOKEN | docker login -u 26032004 --password-stdin
+                    docker push 26032004/expense-tracker:latest
                     '''
                 }
             }
@@ -34,10 +33,10 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                docker pull aswin/expense-tracker:latest
+                docker pull 26032004/expense-tracker:latest
                 docker stop expense || true
                 docker rm expense || true
-                docker run -d -p 3000:3000 --name expense aswin/expense-tracker:latest
+                docker run -d -p 3000:3000 --name expense 26032004/expense-tracker:latest
                 '''
             }
         }
