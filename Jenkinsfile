@@ -21,9 +21,9 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub_pass', variable: 'DOCKERHUB_TOKEN')]) {
+                withCredentials([string(credentialsId: 'dockerhub_pass', variable: 'Docker Hub Access Token')]) {
                     sh '''
-                    echo $DOCKERHUB_TOKEN | docker login -u ASWIN-AK0 --password-stdin
+                    echo $Docker Hub Access Token | docker login -u ASWIN-AK0 --password-stdin
                     docker tag aswin/expense-tracker aswin/expense-tracker:latest
                     docker push aswin/expense-tracker:latest
                     '''
