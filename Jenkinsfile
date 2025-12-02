@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        MONGO_URI = credentials('mongo_uri')
+    }
 
     stages {
 
@@ -36,7 +39,9 @@ pipeline {
                 docker pull 26032004/expense-tracker:latest
                 docker stop expense || true
                 docker rm expense || true
-                docker run -d -p 3000:3000 --name expense 26032004/expense-tracker:latest
+                docker run -d -p 3000:3000 --name expense \
+                  -e MONGO_URI="$MONGO_URI" \
+                  26032004/expense-tracker:latest
                 '''
             }
         }

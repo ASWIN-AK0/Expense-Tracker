@@ -12,6 +12,9 @@ RUN npm install
 # Copy the full project
 COPY . .
 
+# Environment variables
+ENV MONGO_URI=your_connection_string
+
 # Expose port
 EXPOSE 3000
 

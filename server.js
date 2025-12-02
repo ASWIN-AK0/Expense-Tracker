@@ -1,39 +1,20 @@
 const express = require("express");
-const fs = require("fs");
 const cors = require("cors");
+require("dotenv").config();
+const connectDB = require("./config/db");
+
+const expenseRoutes = require("./routes/expensesRoutes");
+
 const app = express();
+
+// Connect MongoDB
+connectDB();
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static("public")); // frontend
 
-const FILE = "./expenses.json";
-
-// Read all expenses
-app.get("/api/expenses", (req, res) => {
-    const data = JSON.parse(fs.readFileSync(FILE));
-    res.json(data);
-});
-
-// Add expense
-app.post("/api/expenses", (req, res) => {
-    const data = JSON.parse(fs.readFileSync(FILE));
-    const newExpense = {
-        id: Date.now(),
-        title: req.body.title,
-        amount: req.body.amount,
-    };
-    data.push(newExpense);
-    fs.writeFileSync(FILE, JSON.stringify(data));
-    res.json({ message: "Expense added", expense: newExpense });
-});
-
-// Delete expense
-app.delete("/api/expenses/:id", (req, res) => {
-    const data = JSON.parse(fs.readFileSync(FILE));
-    const filtered = data.filter(item => item.id != req.params.id);
-    fs.writeFileSync(FILE, JSON.stringify(filtered));
-    res.json({ message: "Expense deleted" });
-});
+// API routes
+app.use("/api/expenses", expenseRoutes);
 
 app.listen(3000, () => console.log("Server running on port 3000"));

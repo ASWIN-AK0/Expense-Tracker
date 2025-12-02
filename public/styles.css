@@ -136,6 +136,17 @@ body{
 
 .btn--primary:hover{ background: linear-gradient(180deg, var(--primary-600) 0%, var(--primary-700) 100%); }
 
+/* Secondary button for neutral actions */
+.btn--secondary{
+  background: rgba(255,255,255,0.08);
+  border:1px solid var(--card-border);
+  color: var(--text);
+}
+
+.btn--secondary:hover{
+  background: rgba(255,255,255,0.12);
+}
+
 .list{
   list-style:none;
   margin:0;
@@ -154,6 +165,13 @@ body{
   background: rgba(255,255,255,0.06);
   border:1px solid var(--card-border);
   border-radius:12px;
+}
+
+/* Right-side action area on each list item */
+.actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .list li .title{
